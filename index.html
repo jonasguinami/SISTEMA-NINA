@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Vendas</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js" defer></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>🔥 Painel de Vendas</h1>
+    </header>
+
+    <main>
+        <section class="navegacao-data">
+            <button id="btn-dia-anterior" class="btn-nav">&lt;</button>
+            <h2 id="data-display"></h2>
+            <button id="btn-dia-seguinte" class="btn-nav">&gt;</button>
+            <button id="btn-hoje" class="btn">Hoje</button>
+        </section>
+
+        <section id="painel-resumo">
+            <h3 id="titulo-resumo">Resumo do Dia</h3>
+            <div class="resumo-cards">
+                <div class="card">
+                    <span class="card-label">💰 Vendas Totais</span>
+                    <span class="card-value" id="total-vendido-dia">R$ 0,00</span>
+                </div>
+                <div class="card">
+                    <span class="card-label">📈 Lucro Líquido</span>
+                    <span class="card-value" id="lucro-liquido-dia">R$ 0,00</span>
+                </div>
+                <div class="card">
+                    <span class="card-label">💸 Dinheiro</span>
+                    <span class="card-value" id="total-dinheiro-dia">R$ 0,00</span>
+                </div>
+                <div class="card">
+                    <span class="card-label">💳 Pix</span>
+                    <span class="card-value" id="total-pix-dia">R$ 0,00</span>
+                </div>
+                <div class="card card-fiado">
+                    <span class="card-label">📋 A Receber (Fiado)</span>
+                    <span class="card-value" id="total-fiado-dia">R$ 0,00</span>
+                </div>
+            </div>
+        </section>
+
+       
+
+        <section id="acoes">
+            <button id="btn-abrir-modal-venda" class="btn btn-principal">➕ Registrar Venda</button>
+            <button id="btn-abrir-modal-produto" class="btn btn-secundario">📦 Cadastrar Produto</button>
+        </section>
+        
+        <section id="vendas-do-dia">
+            <h2>📜 Histórico de Vendas do Dia</h2>
+            <div id="lista-vendas-dia">
+                </div>
+        </section>
+        
+        <section id="contas-a-receber">
+            <h2>📋 Contas a Receber (Fiado)</h2>
+            <div id="lista-fiado">
+                </div>
+        </section>
+
+        <section id="relatorios">
+            <h2>📤 Relatórios</h2>
+            <div class="abas-relatorio">
+                <button class="aba ativa" data-periodo="dia">Dia</button>
+                <button class="aba" data-periodo="semana">Semana</button>
+                <button class="aba" data-periodo="mes">Mês</button>
+            </div>
+            <div class="botoes-relatorio">
+                <button class="btn" id="btn-baixar-txt">Baixar (.txt)</button>
+                <button class="btn" id="btn-baixar-csv">Baixar (.csv)</button>
+                <button class="btn" id="btn-baixar-pdf">Baixar (.pdf)</button>
+            </div>
+        </section>
+
+        <section id="produtos-cadastrados">
+            <h2>📋 Meus Produtos</h2>
+            <div id="lista-produtos">
+                </div>
+        </section>
+    </main>
+
+    <div id="modal-produto" class="modal">
+        <div class="modal-content">
+            <span class="fechar-modal" id="fechar-modal-produto">&times;</span>
+            <h2 id="modal-produto-titulo">Cadastrar Novo Produto</h2>
+            <form id="form-produto">
+                <input type="text" id="nome-produto" placeholder="Nome do Produto" required>
+                <div class="input-group">
+                    <input type="number" id="custo-pacote" placeholder="Custo do Pacote (R$)" step="0.01" required>
+                    <input type="number" id="itens-por-pacote" placeholder="Itens no Pacote" min="1" step="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="custo-unitario">Custo por Unidade (calculado)</label>
+                    <input type="text" id="custo-unitario" disabled>
+                </div>
+                <input type="number" id="preco-venda" placeholder="Preço de Venda por Unidade (R$)" step="0.01" required>
+                <input type="number" id="quantidade-estoque" placeholder="Quantidade Total em Estoque" min="0" step="1" required>
+                <button type="submit" class="btn btn-principal" id="btn-salvar-produto">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-venda" class="modal">
+        <div class="modal-content-large">
+            <span class="fechar-modal" id="fechar-modal-venda">&times;</span>
+            <form id="form-venda">
+                <h2>Registrar Nova Venda</h2>
+                <div class="venda-container">
+                    <div class="venda-coluna">
+                        <h3>Itens da Venda</h3>
+                        <div class="form-group">
+                            <label for="selecionar-produto-venda">Adicionar Produto:</label>
+                            <div class="adicionar-item-group">
+                                <select id="selecionar-produto-venda"></select>
+                                <button type="button" id="btn-adicionar-item-venda" class="btn">+</button>
+                            </div>
+                        </div>
+                        <div id="itens-selecionados-venda">
+                            <p>Nenhum item adicionado.</p>
+                        </div>
+                        <hr>
+                        <h3>Lançar Promoção</h3>
+                        <div id="form-promocao">
+                             <input type="text" id="promo-descricao" placeholder="Descrição (Ex: 3 Pares de Meia)">
+                             <input type="number" id="promo-preco" placeholder="Preço Total da Promoção (R$)">
+                             <button type="button" id="btn-adicionar-promo" class="btn btn-secundario">Adicionar Promoção</button>
+                        </div>
+                    </div>
+                    <div class="venda-coluna">
+                        <h3>Pagamento</h3>
+                        <div class="form-group">
+                            <label for="pagamento-dinheiro">Valor em Dinheiro (R$)</label>
+                            <input type="number" class="input-pagamento" id="pagamento-dinheiro" placeholder="0.00" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="pagamento-pix">Valor em Pix (R$)</label>
+                            <input type="number" class="input-pagamento" id="pagamento-pix" placeholder="0.00" step="0.01">
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="pagamento-fiado">Valor Fiado (calculado)</label>
+                            <input type="number" class="input-pagamento" id="pagamento-fiado" placeholder="0.00" step="0.01" disabled>
+                            <input type="text" id="cliente-fiado" placeholder="Nome do Cliente (para fiado)">
+                        </div>
+                        <div class="resumo-pagamento">
+                            <span>Total Pago:</span> <strong id="total-pago">R$ 0,00</strong>
+                            <br>
+                            <span>Restante:</span> <strong id="valor-restante">R$ 0,00</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="venda-footer">
+                    <h3 id="total-venda-atual">Total: R$ 0,00</h3>
+                    <button type="submit" class="btn btn-principal">Registrar Venda</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

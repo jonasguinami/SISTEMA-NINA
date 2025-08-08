@@ -1,0 +1,164 @@
+/* --- GERAL E LAYOUT --- */
+:root {
+    --cor-principal: #FF4B2B;
+    --cor-secundaria: #FF416C;
+    --cor-fundo: #f0f2f5;
+    --cor-branco: #FFFFFF;
+    --cor-texto: #333333;
+    --cor-sombra: rgba(0, 0, 0, 0.08);
+    --cor-fiado: #ffc107;
+    --border-radius-grande: 16px;
+    --border-radius-pequeno: 8px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+body { background-color: var(--cor-fundo); color: var(--cor-texto); line-height: 1.6; }
+header { background: linear-gradient(90deg, var(--cor-principal), var(--cor-secundaria)); color: var(--cor-branco); padding: 20px; text-align: center; border-radius: 0 0 var(--border-radius-grande) var(--border-radius-grande); margin-bottom: 2rem; box-shadow: 0 4px 12px var(--cor-sombra); }
+main { max-width: 900px; margin: 0 auto; padding: 0 1rem; }
+section { background-color: var(--cor-branco); padding: 2rem; margin-bottom: 1.5rem; border-radius: var(--border-radius-grande); box-shadow: 0 4px 20px var(--cor-sombra); }
+
+/* --- TÍTULOS DE SEÇÃO --- */
+section > h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 0.75rem;
+    border-bottom: none;
+}
+section > h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 4px;
+    background-color: var(--cor-principal);
+    border-radius: 2px;
+}
+
+/* --- NAVEGAÇÃO DE DATA --- */
+.navegacao-data { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem 1.5rem; }
+.navegacao-data h2 { margin: 0; border: none; font-size: 1.8rem; flex-grow: 1; text-align: center; }
+.btn-nav { background: none; border: 2px solid var(--cor-principal); color: var(--cor-principal); font-weight: bold; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; transition: all 0.2s ease; }
+.btn-nav:hover { background-color: var(--cor-principal); color: var(--cor-branco); }
+
+/* --- PAINEL DE RESUMO (CARDS) --- */
+.resumo-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; }
+.card { background-color: #f8f9fa; padding: 1.5rem; border-radius: var(--border-radius-pequeno); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-left: 5px solid var(--cor-principal); transition: transform 0.2s, box-shadow 0.2s; }
+.card:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+.card.card-fiado { border-left-color: var(--cor-fiado); }
+.card.card-fiado .card-value { color: var(--cor-fiado); }
+.card-label { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; }
+.card-value { font-size: 1.8rem; font-weight: bold; color: var(--cor-principal); }
+
+/* --- BOTÕES E AÇÕES --- */
+.btn { padding: 12px 24px; border: none; border-radius: var(--border-radius-grande); font-size: 1rem; font-weight: bold; cursor: pointer; transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.5px; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); }
+.btn-principal { background: linear-gradient(90deg, var(--cor-principal), var(--cor-secundaria)); color: var(--cor-branco); }
+.btn-secundario { background-color: #e9ecef; color: var(--cor-texto); }
+#acoes { display: flex; gap: 1rem; flex-wrap: wrap; }
+#acoes .btn { flex-grow: 1; }
+
+/* --- LISTAS (FIADO, PRODUTOS, VENDAS DO DIA) --- */
+.fiado-item, .produto-item, .venda-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-radius: var(--border-radius-pequeno); margin-bottom: 0.75rem; background-color: #f8f9fa; border-left: 4px solid var(--cor-secundaria); }
+.fiado-item { background-color: #fffbeb; border-left-color: var(--cor-fiado); }
+.fiado-item .info span, .produto-item .info span, .venda-item .info span { display: block; }
+.fiado-item .info .cliente, .produto-item .info > span, .venda-item .info > span { font-weight: bold; }
+.fiado-item .info .valor { color: var(--cor-principal); font-weight: bold; }
+.produto-item .info .estoque { font-weight: normal; color: var(--cor-principal); }
+.fiado-item .btn-receber { background-color: #28a745; color: white; padding: 8px 12px; border-radius: var(--border-radius-pequeno); }
+.produto-item .acoes button { background: none; border: none; cursor: pointer; font-size: 1.2rem; margin-left: 8px; }
+.btn-editar-produto { color: #007bff; }
+.btn-excluir-produto { color: #dc3545; }
+
+
+/* --- RELATÓRIOS --- */
+.abas-relatorio { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--cor-fundo); justify-content: center; }
+.aba { padding: 10px 20px; cursor: pointer; border: none; background-color: transparent; font-size: 1rem; font-weight: 600; border-bottom: 3px solid transparent; transition: all 0.2s ease; }
+.aba.ativa { color: var(--cor-principal); border-bottom: 3px solid var(--cor-principal); }
+.botoes-relatorio { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+
+/*
+============================================================
+CSS DOS MODAIS E SEU CONTEÚDO INTERNO
+============================================================
+*/
+
+/* 1. FUNDO ESCURO (OVERLAY) */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); animation: fadeIn 0.3s; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+
+/* 2. JANELA DO MODAL */
+.modal-content, .modal-content-large { background-color: var(--cor-branco); position: relative; animation: slideIn 0.3s; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); width: 100%; border-radius: var(--border-radius-grande); max-height: 90vh; display: flex; flex-direction: column; text-align: center; /* <<< ALINHAMENTO CENTRAL PARA TODO O CONTEÚDO */ }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.modal-content { max-width: 500px; }
+.modal-content-large { max-width: 900px; }
+.fechar-modal { position: absolute; top: 10px; right: 20px; color: #aaa; font-size: 32px; font-weight: bold; cursor: pointer; z-index: 10; }
+.fechar-modal:hover { color: #333; }
+
+/* 3. TÍTULOS DENTRO DOS MODAIS */
+.modal-content h2, .modal-content-large h2 {
+    text-align: center;
+    border-bottom: 1px solid var(--cor-fundo);
+    font-size: 1.6rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+.modal-content h3, .modal-content-large h3 {
+    text-align: center;
+    font-size: 1.3rem;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--cor-fundo);
+}
+
+/* 4. FORMULÁRIOS E INPUTS DENTRO DOS MODAIS */
+form { display: flex; flex-direction: column; padding: 2rem; }
+input, select {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--border-radius-pequeno);
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background-color: #fdfdff;
+    text-align: center; /* <<< TEXTO DENTRO DOS INPUTS CENTRALIZADO */
+}
+select { text-align: left; } /* Deixa o texto do select à esquerda por padrão */
+.input-group { display: flex; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+.form-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* 5. MODAL DE VENDA ESPECÍFICO */
+#form-venda { padding: 0; display: flex; flex-direction: column; flex-grow: 1; min-height: 0; }
+#form-venda > h2 { padding: 1.5rem 2rem 1rem 2rem; flex-shrink: 0; }
+.venda-container { padding: 1rem 2rem; overflow-y: auto; flex-grow: 1; }
+.venda-footer { padding: 1rem 2rem; border-top: 2px solid var(--cor-fundo); background-color: var(--cor-branco); flex-shrink: 0; box-shadow: 0 -4px 12px rgba(0,0,0,0.05); }
+.venda-footer h3 { border-bottom: none; margin-bottom: 1rem; font-size: 1.8rem; text-align: center; color: var(--cor-principal); }
+.venda-footer .btn-principal { width: 100%; padding: 1rem; font-size: 1.2rem; }
+#itens-selecionados-venda { border: 1px dashed #ccc; border-radius: var(--border-radius-pequeno); padding: 1rem; min-height: 100px; text-align: left; }
+.adicionar-item-group { display: flex; gap: 0.5rem; }
+.resumo-pagamento {
+    margin-top: 1rem;
+    text-align: left;
+}
+.resumo-pagamento > div {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    font-size: 1.1rem;
+}
+
+/* 6. ADAPTAÇÃO PARA DESKTOP */
+@media (min-width: 800px) {
+    .venda-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .venda-coluna { text-align: left; } /* Alinha o conteúdo das colunas à esquerda no desktop */
+    .venda-coluna:last-child { border-left: 2px solid var(--cor-fundo); padding-left: 2rem; }
+    .venda-coluna h3 { text-align: left; }
+}
